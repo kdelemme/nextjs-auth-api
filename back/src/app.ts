@@ -28,7 +28,7 @@ router.post(
     // 1. Add extra validation on the body payload
     // and check for user existence
     const sanitizedEmail = email.toLowerCase();
-    const encryptedPassword = await bcrypt.hash(password, 12);
+    const hashedPassword = await bcrypt.hash(password, 12);
     const accessToken = crypto
       .createHash("sha256")
       .update(uuidv4())
@@ -36,7 +36,7 @@ router.post(
 
     // 2. Using in memory storage: replace with db client
     FAKE_USERS_DB[sanitizedEmail] = {
-      password: encryptedPassword,
+      password: hashedPassword,
       accessToken: accessToken,
     };
 
